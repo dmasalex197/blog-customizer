@@ -44,7 +44,7 @@ export const ArticleParamsForm = ({ onSubmit }: ArticleParamsFormProps) => {
 	};
 
 	const handleSubmit = (event: React.FormEvent) => {
-		event?.preventDefault();
+		event.preventDefault();
 		onSubmit(formState);
 	};
 	return (
