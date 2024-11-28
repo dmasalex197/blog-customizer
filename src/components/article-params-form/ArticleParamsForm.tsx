@@ -23,15 +23,15 @@ type ArticleParamsFormProps = {
 };
 
 export const ArticleParamsForm = ({ onSubmit }: ArticleParamsFormProps) => {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [formState, setFormState] = useState(defaultArticleState);
 
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	useOutsideClickClose({
-		isOpen: isOpen,
+		isOpen: isMenuOpen,
 		rootRef: containerRef,
-		onChange: setIsOpen,
+		onChange: setIsMenuOpen,
 	});
 
 	const handleReset = () => {
@@ -49,10 +49,15 @@ export const ArticleParamsForm = ({ onSubmit }: ArticleParamsFormProps) => {
 	};
 	return (
 		<div ref={containerRef}>
-			<ArrowButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
+			<ArrowButton
+				isOpen={isMenuOpen}
+				onClick={() => setIsMenuOpen(!isMenuOpen)}
+			/>
 			<aside
-				className={clsx(styles.container, { [styles.container_open]: isOpen })}>
-				<form className={styles.form}>
+				className={clsx(styles.container, {
+					[styles.container_open]: isMenuOpen,
+				})}>
+				<form className={styles.form} onClick={handleSubmit}>
 					<h2 className={styles.title}>Задайте параметры</h2>
 					<Select
 						selected={formState.fontFamilyOption}
@@ -121,12 +126,7 @@ export const ArticleParamsForm = ({ onSubmit }: ArticleParamsFormProps) => {
 							type='clear'
 							onClick={handleReset}
 						/>
-						<Button
-							title='Применить'
-							htmlType='submit'
-							type='apply'
-							onClick={handleSubmit}
-						/>
+						<Button title='Применить' htmlType='submit' type='apply' />
 					</div>
 				</form>
 			</aside>
